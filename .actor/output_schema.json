@@ -17,19 +17,11 @@
       },
       "error": {
         "type": "string",
-        "title": "Error Message",
-        "description": "Error message if language detection fails"
+        "title": "Error",
+        "description": "Only present if language detection failed"
       }
     },
-    "required": ["text"],
-    "anyOf": [
-      {
-        "required": ["language", "confidence"]
-      },
-      {
-        "required": ["error"]
-      }
-    ]
+    "required": ["text"]
   },
   "views": {
     "overview": {
@@ -38,8 +30,7 @@
         "fields": [
           "text",
           "language",
-          "confidence",
-          "error"
+          "confidence"
         ]
       },
       "display": {
@@ -53,9 +44,6 @@
           },
           "confidence": {
             "label": "Confidence"
-          },
-          "error": {
-            "label": "Error Message"
           }
         }
       }
