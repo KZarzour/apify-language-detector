@@ -1,4 +1,4 @@
-from lingua_language_detector import LanguageDetectorBuilder
+from lingua import LanguageDetectorBuilder
 from apify import Actor
 
 async def main():
