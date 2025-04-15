@@ -1,4 +1,4 @@
-from lingua import Language, LanguageDetectorBuilder
+from lingua import LanguageDetectorBuilder
 from apify import Actor
 
 async def main():
@@ -13,17 +13,17 @@ async def main():
 
         for text in texts:
             try:
-                confidences = detector.compute_language_confidence_values(text)
+                confidence_values = detector.compute_language_confidence_values(text)
 
-                if not confidences:
+                if not confidence_values:
                     raise ValueError("Unable to detect language with confidence")
 
-                best_language, confidence = max(confidences.items(), key=lambda x: x[1])
+                best_lang, best_prob = confidence_values[0]
 
                 results.append({
                     "text": text,
-                    "language": best_language.iso_code_639_1.name.lower(),
-                    "confidence": round(confidence, 6)
+                    "language": best_lang.iso_code_639_1.name.lower(),
+                    "confidence": round(best_prob, 6)
                 })
 
             except Exception as e:
