@@ -10,7 +10,7 @@
       "description": "Enter one text sample per line. Each line will be analyzed as a separate input.",
       "editor": "textarea",
       "default": "Hello, how are you?\nBonjour, comment ça va?\nHola, ¿cómo estás?\nこれは日本語です。",
-      "prefill": "Hello, how are you?\nBonjour, comment ça va?\nHola, ¿cómo estás?\nこれは日本語です。?"
+      "prefill": "Hello, how are you?\nBonjour, comment ça va?\nHola, ¿cómo estás?\nこれは日本語です。"
     }
   },
   "required": ["text"]
