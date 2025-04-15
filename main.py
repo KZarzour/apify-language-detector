@@ -28,6 +28,7 @@ async def main():
                     "error": str(e)
                 })
 
+        await Actor.push_data(results)
         await Actor.set_value("OUTPUT", results)
 
 if __name__ == "__main__":
