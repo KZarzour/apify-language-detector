@@ -32,26 +32,22 @@ The actor will return the detected language for each line of text, along with al
   {
     "text": "Hello, how are you?",
     "language": "en",
-    "alternatives": [
-      { "lang": "en", "probability": 0.99999 },
-      { "lang": "fr", "probability": 0.00001 }
-    ]
+    "confidence": 0.999995
   },
   {
     "text": "Bonjour, comment ça va?",
     "language": "fr",
-    "alternatives": [
-      { "lang": "fr", "probability": 0.99997 },
-      { "lang": "en", "probability": 0.00003 }
-    ]
+    "confidence": 0.999991
+  },
+  {
+    "text": "Hola, ¿cómo estás?",
+    "language": "es",
+    "confidence": 0.999995
   },
   {
     "text": "これは日本語です。",
     "language": "ja",
-    "alternatives": [
-      { "lang": "ja", "probability": 0.99999 },
-      { "lang": "zh", "probability": 0.00001 }
-    ]
+    "confidence": 1.0
   }
 ]
 ```
