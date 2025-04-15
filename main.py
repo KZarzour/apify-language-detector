@@ -13,13 +13,20 @@ async def main():
 
         for text in texts:
             try:
-                confidence_map = detector.compute_language_confidence_values(text)
-                top_language = max(confidence_map, key=confidence_map.get)
-                confidence = round(confidence_map[top_language], 6)
+                confidence_data = detector.compute_language_confidence_values(text)
+
+                # Handle both possible types
+                if isinstance(confidence_data, dict):
+                    top_lang = max(confidence_data, key=confidence_data.get)
+                    confidence = round(confidence_data[top_lang], 6)
+                else:
+                    top = max(confidence_data, key=lambda cv: cv.value)
+                    top_lang = top.language
+                    confidence = round(top.value, 6)
 
                 results.append({
                     "text": text,
-                    "language": top_language.iso_code_639_1.name.lower(),
+                    "language": top_lang.iso_code_639_1.name.lower(),
                     "confidence": confidence
                 })
             except Exception as e:
