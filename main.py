@@ -4,7 +4,10 @@ from apify import Actor
 async def main():
     async with Actor:
         input_data = await Actor.get_input()
-        texts = input_data.get("texts", [])
+        raw_text = input_data.get("text", "")
+
+        # Split into lines and clean
+        texts = [line.strip() for line in raw_text.splitlines() if line.strip()]
         results = []
 
         for text in texts:
@@ -15,7 +18,7 @@ async def main():
                     "text": text,
                     "language": best_guess,
                     "alternatives": [
-                        {"lang": str(alt.lang), "prob": alt.prob}
+                        {"lang": str(alt.lang), "probability": round(alt.prob, 6)}
                         for alt in all_guesses
                     ]
                 })

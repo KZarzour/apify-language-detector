@@ -1,19 +1,17 @@
 {
   "title": "Input schema for Language Detector Actor",
-  "description": "This Actor detects the language of one or more input text strings.",
+  "description": "This Actor detects the language of each text line entered below.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "texts": {
-      "title": "Text Samples",
-      "type": "array",
-      "description": "List of text strings to detect language for",
-      "items": {
-        "type": "string"
-      }
+    "text": {
+      "title": "Text Input",
+      "type": "string",
+      "description": "Enter one text sample per line. Each line will be analyzed as a separate input.",
+      "editor": "textarea",
+      "default": "Hello, how are you?\nBonjour, comment ça va?\nHola, ¿cómo estás?\nCiao, come stai?",
+      "prefill": "Hello, how are you?\nBonjour, comment ça va?\nHola, ¿cómo estás?\nCiao, come stai?"
     }
   },
-  "required": [
-    "texts"
-  ]
+  "required": ["text"]
 }
