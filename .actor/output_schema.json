@@ -11,26 +11,12 @@
         "type": "string",
         "title": "Detected Language"
       },
-      "alternatives": {
-        "type": "array",
-        "title": "Alternative Guesses",
-        "items": {
-          "type": "object",
-          "properties": {
-            "lang": {
-              "type": "string",
-              "title": "Language Code"
-            },
-            "probability": {
-              "type": "number",
-              "title": "Confidence"
-            }
-          },
-          "required": ["lang", "probability"]
-        }
+      "confidence": {
+        "type": "number",
+        "title": "Confidence"
       }
     },
-    "required": ["text", "language", "alternatives"]
+    "required": ["text", "language", "confidence"]
   },
   "views": {
     "overview": {
@@ -38,7 +24,8 @@
       "transformation": {
         "fields": [
           "text",
-          "language"
+          "language",
+          "confidence"
         ]
       },
       "display": {
@@ -49,6 +36,9 @@
           },
           "language": {
             "label": "Detected Language"
+          },
+          "confidence": {
+            "label": "Confidence"
           }
         }
       }

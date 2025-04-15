@@ -1,7 +1,10 @@
-from langdetect import detect, detect_langs
+from lingua import LanguageDetectorBuilder
 from apify import Actor
 
 async def main():
+    # Initialize the language detector from Lingua
+    detector = LanguageDetectorBuilder.from_languages().build()
+
     async with Actor:
         input_data = await Actor.get_input()
         raw_text = input_data.get("text", "")
@@ -12,22 +15,32 @@ async def main():
 
         for text in texts:
             try:
-                best_guess = detect(text)
-                all_guesses = detect_langs(text)
-                results.append({
-                    "text": text,
-                    "language": best_guess,
-                    "alternatives": [
-                        {"lang": str(alt.lang), "probability": round(alt.prob, 6)}
-                        for alt in all_guesses
-                    ]
-                })
+                # Detect the language using Lingua
+                lang = detector.detect_language_of(text)
+                
+                if lang:
+                    # Get the language code and name
+                    language = lang.name
+                    # Get confidence score (Lingua gives a score between 0 and 1)
+                    confidence = lang.probability
+                    results.append({
+                        "text": text,
+                        "language": language,
+                        "confidence": round(confidence, 6)
+                    })
+                else:
+                    results.append({
+                        "text": text,
+                        "error": "Could not detect language"
+                    })
+
             except Exception as e:
                 results.append({
                     "text": text,
                     "error": str(e)
                 })
 
+        # Push results to Apify's dataset and set value
         await Actor.push_data(results)
         await Actor.set_value("OUTPUT", results)
 
