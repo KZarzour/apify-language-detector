@@ -1,0 +1,57 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "type": "object",
+    "properties": {
+      "text": {
+        "type": "string",
+        "title": "Original Text"
+      },
+      "language": {
+        "type": "string",
+        "title": "Detected Language"
+      },
+      "alternatives": {
+        "type": "array",
+        "title": "Alternative Guesses",
+        "items": {
+          "type": "object",
+          "properties": {
+            "lang": {
+              "type": "string",
+              "title": "Language Code"
+            },
+            "probability": {
+              "type": "number",
+              "title": "Confidence"
+            }
+          },
+          "required": ["lang", "probability"]
+        }
+      }
+    },
+    "required": ["text", "language", "alternatives"]
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": [
+          "text",
+          "language"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "text": {
+            "label": "Original Text"
+          },
+          "language": {
+            "label": "Detected Language"
+          }
+        }
+      }
+    }
+  }
+}

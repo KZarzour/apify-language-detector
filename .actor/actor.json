@@ -1,0 +1,16 @@
+{
+    "actorSpecification": 1,
+    "name": "language-detector",
+    "version": "1.0",
+    "buildTag": "latest",
+    "memoryMb": 512,
+    "environmentVariables": {
+      "PYTHON_VERSION": "3.9"
+    },
+    "input": "./input_schema.json",
+    "storages": {
+      "dataset": "./output_schema.json"
+    },
+    "hideSourceFiles": true
+}
+  

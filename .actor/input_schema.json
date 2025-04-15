@@ -1,0 +1,19 @@
+{
+  "title": "Input schema for Language Detector Actor",
+  "description": "This Actor detects the language of one or more input text strings.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "texts": {
+      "title": "Text Samples",
+      "type": "array",
+      "description": "List of text strings to detect language for",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "texts"
+  ]
+}
