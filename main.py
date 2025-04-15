@@ -3,7 +3,7 @@ from apify import Actor
 
 async def main():
     # Initialize the language detector from Lingua
-    detector = LanguageDetectorBuilder.from_languages().build()
+    detector = LanguageDetectorBuilder.from_all_languages().build()
 
     async with Actor:
         input_data = await Actor.get_input()
