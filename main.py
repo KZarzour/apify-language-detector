@@ -1,38 +1,30 @@
-from lingua import LanguageDetectorBuilder
+from lingua import Language, LanguageDetectorBuilder
 from apify import Actor
 
 async def main():
-    # Initialize the language detector from Lingua
-    detector = LanguageDetectorBuilder.from_all_languages().build()
-
     async with Actor:
         input_data = await Actor.get_input()
         raw_text = input_data.get("text", "")
 
-        # Split into lines and clean
         texts = [line.strip() for line in raw_text.splitlines() if line.strip()]
         results = []
 
+        detector = LanguageDetectorBuilder.from_all_languages().build()
+
         for text in texts:
             try:
-                # Detect the language using Lingua
-                lang = detector.detect_language_of(text)
-                
-                if lang:
-                    # Get the language code and name
-                    language = lang.name
-                    # Get confidence score (Lingua gives a score between 0 and 1)
-                    confidence = lang.probability
-                    results.append({
-                        "text": text,
-                        "language": language,
-                        "confidence": round(confidence, 6)
-                    })
-                else:
-                    results.append({
-                        "text": text,
-                        "error": "Could not detect language"
-                    })
+                confidences = detector.compute_language_confidence_values(text)
+
+                if not confidences:
+                    raise ValueError("Unable to detect language with confidence")
+
+                best_language, confidence = max(confidences.items(), key=lambda x: x[1])
+
+                results.append({
+                    "text": text,
+                    "language": best_language.iso_code_639_1.name.lower(),
+                    "confidence": round(confidence, 6)
+                })
 
             except Exception as e:
                 results.append({
@@ -40,9 +32,7 @@ async def main():
                     "error": str(e)
                 })
 
-        # Push results to Apify's dataset and set value
         await Actor.push_data(results)
-        await Actor.set_value("OUTPUT", results)
 
 if __name__ == "__main__":
     import asyncio
