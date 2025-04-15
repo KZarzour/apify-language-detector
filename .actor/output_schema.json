@@ -14,9 +14,22 @@
       "confidence": {
         "type": "number",
         "title": "Confidence"
+      },
+      "error": {
+        "type": "string",
+        "title": "Error Message",
+        "description": "Error message if language detection fails"
       }
     },
-    "required": ["text", "language", "confidence"]
+    "required": ["text"],
+    "anyOf": [
+      {
+        "required": ["language", "confidence"]
+      },
+      {
+        "required": ["error"]
+      }
+    ]
   },
   "views": {
     "overview": {
@@ -25,7 +38,8 @@
         "fields": [
           "text",
           "language",
-          "confidence"
+          "confidence",
+          "error"
         ]
       },
       "display": {
@@ -39,6 +53,9 @@
           },
           "confidence": {
             "label": "Confidence"
+          },
+          "error": {
+            "label": "Error Message"
           }
         }
       }
